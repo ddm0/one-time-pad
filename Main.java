@@ -13,8 +13,8 @@ public class Main extends Application {
 	
 		EventHandler<ActionEvent> msgEvent = new EventHandler<ActionEvent>() {
  
-            @Override
-            public void handle(ActionEvent e) {
+			@Override
+			public void handle(ActionEvent e) {
 				//add error check for ip
 				try {
 					String ip = gui.getIp();	
@@ -39,3 +39,4 @@ public class Main extends Application {
 		launch(args);
     }
 }
+

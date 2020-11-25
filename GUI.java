@@ -21,7 +21,7 @@ public class GUI {
 		final int WIDTH = 300;
 		final int HEIGHT = 250;
 
-        GridPane root = new GridPane();
+		GridPane root = new GridPane();
 		root.setMinSize(WIDTH,HEIGHT);	
 		root.setPadding(new Insets(20));
 		root.setVgap(5); 
@@ -43,8 +43,8 @@ public class GUI {
 		textOutput.setPrefWidth(80);
 
 		Button btnMsg = new Button();
-        btnMsg.setText("Send Message");
-        btnMsg.setOnAction(msgEvent);
+		btnMsg.setText("Send Message");
+		btnMsg.setOnAction(msgEvent);
 
 		root.add(textIp, 0, 0);
 		root.add(textFIp, 1, 0);
@@ -59,9 +59,9 @@ public class GUI {
 		root.add(btnMsg, 4, 2);
 		root.add(textOutput, 0, 5, 5, 5);
 	   
-        primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
-        primaryStage.setTitle("OTP");
-        primaryStage.show();
+		primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
+		primaryStage.setTitle("OTP");
+		primaryStage.show();
 	}
 	
 	public String getIp() {
@@ -84,3 +84,4 @@ public class GUI {
 		textStatus.setText(s);
 	}
 }
+

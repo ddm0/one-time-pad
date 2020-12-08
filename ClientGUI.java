@@ -36,7 +36,6 @@ public class ClientGUI extends Application {
 		launch(args);
 	}
 
-
 	EventHandler<ActionEvent> eConnect = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
 			try {
@@ -61,11 +60,11 @@ public class ClientGUI extends Application {
 		public void handle(ActionEvent ae) {
 			listener.exit();
 
-				try {
-					client.disconnect();
-				}
-				catch (IOException e) {}
-				gui.setStatus("Disconnected from the server.");
+			try {
+				client.disconnect();
+			}
+			catch (IOException e) {}
+			gui.setStatus("Disconnected from the server.");
 		}
 	};
 	

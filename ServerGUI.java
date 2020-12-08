@@ -37,7 +37,6 @@ public class ServerGUI extends Application {
 
 
 	EventHandler<ActionEvent> eCreate = new EventHandler<ActionEvent>() {
-
 		public void handle(ActionEvent ae) {
 			try {
 				server = new Server(gui.getLocalIp(), Integer.parseInt(gui.getLocalPort()));

@@ -1,12 +1,11 @@
 import java.net.Socket;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.net.Proxy;
-import java.io.IOException;
+import java.net.Proxy; import java.io.IOException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-public class Client {
+public class Client extends Listenable {
 	private	SocketAddress addr;
 	private	Proxy proxy; 
 	private	Socket socket;
@@ -29,7 +28,7 @@ public class Client {
 		input = new DataInputStream(socket.getInputStream());
 	}
 
-	void stop() throws IOException {
+	void disconnect() throws IOException {
 		socket.close();
 	}
 
@@ -37,8 +36,13 @@ public class Client {
 		output.writeChars(data);
 	}
 	
-	String getData() throws IOException {
+	String listen() throws IOException {
 		return input.readUTF();
 	}
+
+	boolean isAlive() throws IOException {
+		return socket.isConnected() && socket.getInetAddress().isReachable(1000);
+	}
+
 }
 

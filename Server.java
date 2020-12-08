@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-public class Server {
-	InetAddress ip;
-	int port;
+public class Server extends Listenable {
+	private InetAddress ip;
+	private int port;
 	private Socket socket;
 	private ServerSocket serversocket;
 	private DataInputStream input;
 	private DataOutputStream output;
 
-	Server(String ip, int port) throws Exception {
+	Server(String ip, int port) throws IOException {
 		if (ip != null && !ip.isEmpty()) {
 			this.ip = InetAddress.getByName(ip);
 		} else {
@@ -38,7 +38,7 @@ public class Server {
 		output.writeChars(data);
 	}
 	
-	String getData() throws IOException {
+	String listen() throws IOException {
 		return input.readUTF();
 	}
 }

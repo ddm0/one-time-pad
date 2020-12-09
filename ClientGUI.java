@@ -47,12 +47,12 @@ public class ClientGUI extends Application {
 				return;
 			}
 			catch (IOException e) {
-				gui.setStatus("Failed to connect.");
+				gui.setStatus("Failed to connect." + e.getMessage());
 				return;
 			}
 
 			listener = new Listener(client, gui);
-			listener.run();
+			listener.start();
 		}
 	};
 	
@@ -63,7 +63,9 @@ public class ClientGUI extends Application {
 			try {
 				client.disconnect();
 			}
-			catch (IOException e) {}
+			catch (IOException e) {
+				gui.setStatus("Failed to disconnect." + e.getMessage());
+			}
 			gui.setStatus("Disconnected from the server.");
 		}
 	};

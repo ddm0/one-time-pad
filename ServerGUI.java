@@ -12,6 +12,7 @@ public class ServerGUI extends Application {
 		
 	GUI gui = new GUI();
 	Server server;
+	boolean serverAlive = false;
 	Listener listener = new Listener(server, gui);
 
 	public void start(Stage primaryStage) {
@@ -38,44 +39,66 @@ public class ServerGUI extends Application {
 
 	EventHandler<ActionEvent> eCreate = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
+			if (serverAlive) {
+				gui.setStatus("Server already running.");	
+				return;
+			}
+
 			try {
 				server = new Server(gui.getLocalIp(), Integer.parseInt(gui.getLocalPort()));
-				server.start();
 			} 
 			catch (NumberFormatException e) {
 				gui.setStatus("Invalid port.");
 				return;
 			}
 			catch (IOException e) {
-				gui.setStatus("Failed to start the server.");
+				gui.setStatus("Failed to start the server." + e.getMessage());
 				return;
 			}
+			
 
 			listener = new Listener(server, gui);
-			listener.run();
+			listener.start();
+
+			gui.setStatus("Successfully started the server.");
+			serverAlive = true;
 		}
 	};
 	
 	EventHandler<ActionEvent> eDestroy = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
+			if (!serverAlive) {
+				gui.setStatus("No server running.");	
+				return;
+			}
+
 			listener.exit();
 			
 			try {
 				server.stop();
 			}
-			catch (IOException e) {}
+			catch (IOException e) {
+				gui.setStatus("Failed to stop the server." + e.getMessage());
+				return;
+			}
 				
-			gui.setStatus("Stopped the server.");
+			gui.setStatus("Successfully stopped the server.");
+			serverAlive = false;
 		}
 	};
 	
 	EventHandler<ActionEvent> eMsg = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
+			if (!serverAlive) {
+				gui.setStatus("No server running.");	
+				return;
+			}
+
 			try {
 				server.sendData(Pad.encrypt(gui.getMsg(), gui.getKey()));
 			}
-			catch (IOException e) {
-				gui.setStatus("Failed to send the message.");
+			catch (Exception e) {
+				gui.setStatus("Failed to send the message." + e.getMessage());
 			}
 
 			gui.setStatus("Sent the encrypted message");

@@ -65,7 +65,7 @@ public class GUI {
 		root.add(textFKey, 4, 0);
 		root.add(textMsg, 3, 1);
 		root.add(textFMsg, 4, 1);
-		root.add(btnMsg, 4, 2);
+		root.add(btnMsg, 3, 2);
 		root.add(textOutput, 0, 5, 5, 5);
 	   
 		primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));

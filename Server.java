@@ -14,23 +14,18 @@ public class Server extends Listenable {
 	private DataOutputStream output;
 
 	Server(String ip, int port) throws IOException {
-		if (ip != null && !ip.isEmpty()) {
-			this.ip = InetAddress.getByName(ip);
-		} else {
-			this.ip = InetAddress.getLocalHost();
-		}
-		this.port = port;
-	}
+		InetAddress addr;
 
-	void start() throws IOException {
-		serversocket = new ServerSocket(port, 1, ip);
-		socket = serversocket.accept();
-		output = new DataOutputStream(socket.getOutputStream());
-		input = new DataInputStream(socket.getInputStream());
+		if (ip != null && !ip.isEmpty()) {
+			addr = InetAddress.getByName(ip);
+		} else {
+			addr = InetAddress.getLocalHost();
+		}
+
+		serversocket = new ServerSocket(port, 1, addr);
 	}
 
 	void stop() throws IOException {
-		socket.close();
 		serversocket.close();
 	}
 
@@ -39,6 +34,9 @@ public class Server extends Listenable {
 	}
 	
 	String listen() throws IOException {
+		socket = serversocket.accept();
+		output = new DataOutputStream(socket.getOutputStream());
+		input = new DataInputStream(socket.getInputStream());
 		return input.readUTF();
 	}
 }

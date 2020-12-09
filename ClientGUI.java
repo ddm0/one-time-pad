@@ -39,6 +39,7 @@ public class ClientGUI extends Application {
 			try {
 				client = new Client(gui.getConnectIp(), Integer.parseInt(gui.getConnectPort()), gui);
 				client.connect();
+				Pad.setKey(gui.getKey());
 			} 
 			catch (NumberFormatException e) {
 				gui.setStatus("Invalid port.");
@@ -69,7 +70,7 @@ public class ClientGUI extends Application {
 	EventHandler<ActionEvent> eMsg = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
 			try {
-				client.sendData(Pad.encrypt(gui.getMsg(),gui.getKey()));
+				client.sendData(Pad.encrypt(gui.getMsg()));
 			}
 			catch (IOException e) {
 				gui.setStatus("Failed to send the message." + e.getMessage());

@@ -55,7 +55,7 @@ public class Server extends Thread {
 			catch (IOException e) {}
 			while (running) {	
 				try {
-					print = input.readUTF();
+					print = Pad.decrypt(input.readUTF());
 					Platform.runLater(new Runnable() {
 						public void run() {
 							gui.setOutput(print);
@@ -72,33 +72,6 @@ public class Server extends Thread {
 	public boolean isRunning() {
 		return running;
 	}
-		
-/*
-
-		if (firstConnection) {
-				socket = serversocket.accept();
-				output = new DataOutputStream(socket.getOutputStream());
-				input = new DataInputStream(socket.getInputStream());
-				firstConnection = false;
-		} else if (!socket.getInetAddress().isReachable(500)) {
-				socket = serversocket.accept();
-				output = new DataOutputStream(socket.getOutputStream());
-				input = new DataInputStream(socket.getInputStream());
-		}
-		*/
-			//}
-			/*
-			byte[] buffer = new byte[1024];
-			int read;
-			String out = "";
-			while((read = input.read(buffer)) != -1) {
-				out += new String(buffer, 0, read);
-			};
-
-			*/
-			//return input.readUTF();
-	
-		//return out;
-	}
+}
 
 

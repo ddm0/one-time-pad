@@ -57,9 +57,6 @@ public class ServerGUI extends Application {
 				return;
 			}
 			
-
-			//Platform.runLater(listener);
-
 			gui.setStatus("Successfully started the server.");
 		}
 	};

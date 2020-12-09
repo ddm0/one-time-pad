@@ -47,14 +47,6 @@ public class Client extends Thread {
 		output.writeUTF(data);
 	}
 	
-	String listen() throws IOException {
-		return input.readUTF();
-	}
-
-	boolean alive() throws IOException {
-		return socket.isConnected() && socket.getInetAddress().isReachable(1000);
-	}
-	
 	public void run() {
 		running = true;
 

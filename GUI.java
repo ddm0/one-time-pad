@@ -18,8 +18,8 @@ public class GUI {
 	private TextField textFOutput;
 
     void init(EventHandler<ActionEvent> eMsg, GridPane root, Stage primaryStage) {
-		final int WIDTH = 650;
-		final int HEIGHT = 250;
+		final int WIDTH = 570;
+		final int HEIGHT = 150;
 
 		root.setMinSize(WIDTH,HEIGHT);	
 		root.setPadding(new Insets(20));

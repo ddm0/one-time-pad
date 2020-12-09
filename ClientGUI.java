@@ -50,7 +50,6 @@ public class ClientGUI extends Application {
 				return;
 			}
 
-			//Platform.run
 			gui.setStatus("Connected to the server.");
 		}
 	};

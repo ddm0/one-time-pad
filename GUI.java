@@ -20,7 +20,7 @@ public class GUI {
 	private TextField textOutput;
 
     void init(EventHandler<ActionEvent> eMsg, GridPane root, Stage primaryStage) {
-		final int WIDTH = 300;
+		final int WIDTH = 650;
 		final int HEIGHT = 250;
 
 		root.setMinSize(WIDTH,HEIGHT);	

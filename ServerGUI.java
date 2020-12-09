@@ -7,7 +7,7 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.lang.NumberFormatException;
 import java.net.ConnectException;
-import javafx.application.Platform;
+import javafx.scene.text.Text;
 
 public class ServerGUI extends Application {
 		
@@ -16,7 +16,10 @@ public class ServerGUI extends Application {
 
 	public void start(Stage primaryStage) {
 		GridPane root = new GridPane();
-
+		
+		Text textLocalIp = new Text("Local IP:");
+		Text textLocalPort = new Text("Local PORT:");
+		
 		Button btnCreate = new Button();
 		btnCreate.setText("Create Server");
 		btnCreate.setOnAction(eCreate);
@@ -25,6 +28,8 @@ public class ServerGUI extends Application {
 		btnDestroy.setText("Destroy Server");
 		btnDestroy.setOnAction(eDestroy);
 		
+		root.add(textLocalIp, 0, 0);
+		root.add(textLocalPort, 0, 1);
 		root.add(btnCreate, 6, 0);
 		root.add(btnDestroy, 6, 1);
 
@@ -43,7 +48,7 @@ public class ServerGUI extends Application {
 			}
 
 			try {
-				server = new Server(gui.getLocalIp(), Integer.parseInt(gui.getLocalPort()), gui);
+				server = new Server(gui.getIp(), Integer.parseInt(gui.getPort()), gui);
 				gui.setOutput(server.print);
 				server.open();
 				Pad.setKey(gui.getKey());

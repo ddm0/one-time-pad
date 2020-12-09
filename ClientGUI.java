@@ -7,6 +7,7 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.lang.NumberFormatException;
 import java.net.ConnectException;
+import javafx.scene.text.Text;
 
 public class ClientGUI extends Application {
 		
@@ -15,6 +16,9 @@ public class ClientGUI extends Application {
 
 	public void start(Stage primaryStage) {
 		GridPane root = new GridPane();
+		
+		Text textConnectIp = new Text("Connect IP:");
+		Text textConnectPort = new Text("Connect PORT:");
 
 		Button btnConnect = new Button();
 		btnConnect.setText("Connect");
@@ -24,6 +28,8 @@ public class ClientGUI extends Application {
 		btnDisconnect.setText("Disconnect");
 		btnDisconnect.setOnAction(eDisconnect);
 		
+		root.add(textConnectIp, 0, 0);
+		root.add(textConnectPort, 0, 1);
 		root.add(btnConnect, 6, 0);
 		root.add(btnDisconnect, 6, 1);
 
@@ -37,7 +43,7 @@ public class ClientGUI extends Application {
 	EventHandler<ActionEvent> eConnect = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
 			try {
-				client = new Client(gui.getConnectIp(), Integer.parseInt(gui.getConnectPort()), gui);
+				client = new Client(gui.getIp(), Integer.parseInt(gui.getPort()), gui);
 				client.connect();
 				Pad.setKey(gui.getKey());
 			} 

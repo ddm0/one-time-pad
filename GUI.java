@@ -10,14 +10,13 @@ import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 
 public class GUI {
-	private TextField textFLocalIp;
-	private TextField textFConnectIp;
-	private TextField textFLocalPort;
-	private TextField textFConnectPort;
+	private TextField textFIp;
+	private TextField textFPort;
 	private TextField textFKey;
 	private TextField textFMsg;
 	private Text textStatusMsg;
-	private TextField textOutput;
+	private TextField textFOutput;
+	private TextField textFPass;
 
     void init(EventHandler<ActionEvent> eMsg, GridPane root, Stage primaryStage) {
 		final int WIDTH = 650;
@@ -29,64 +28,48 @@ public class GUI {
 		root.setHgap(5); 
 		root.setAlignment(Pos.CENTER); 
 		
-		Text textLocalIp = new Text("Local IP:");
-		Text textConnectIp = new Text("Connect IP:");
-		Text textLocalPort = new Text("Local PORT:");
-		Text textConnectPort = new Text("Connect PORT:");
-		Text textStatus = new Text("Status: ");
+		Text textStatus = new Text("Status:");
 		textStatusMsg = new Text("OFFLINE");
 		Text textKey = new Text("Pad:");
 		Text textMsg = new Text("Message:");
+		Text textPass = new Text("Password:");
 		
-		textFLocalIp = new TextField();
-		textFConnectIp = new TextField();
-		textFLocalPort = new TextField();
-		textFConnectPort = new TextField();
+		textFIp = new TextField();
+		textFPort = new TextField();
 		textFKey = new TextField();
 		textFMsg = new TextField();
-		textOutput = new TextField("No messages");	
-		textOutput.setPrefWidth(80);
+		textFPass = new TextField();
+		textFOutput = new TextField("No messages");	
 
 		Button btnMsg = new Button();
+
 		btnMsg.setText("Send Message");
 		btnMsg.setOnAction(eMsg);
 
-		root.add(textLocalIp, 0, 0);
-		root.add(textFLocalIp, 1, 0);
-		root.add(textLocalPort, 0, 1);
-		root.add(textFLocalPort, 1, 1);
-		root.add(textConnectIp, 0, 2);
-		root.add(textFConnectIp, 1, 2);
-		root.add(textConnectPort, 0, 3);
-		root.add(textFConnectPort, 1, 3);
-		root.add(textStatus, 0, 4);
-		root.add(textStatusMsg, 1, 4, 4, 1);
+		root.add(textFIp, 1, 0);
+		root.add(textFPort, 1, 1);
+		root.add(textPass, 0, 2);
+		root.add(textFPass, 1, 2);
+		root.add(textStatus, 0, 3);
+		root.add(textStatusMsg, 1, 3, 4, 1);
 		root.add(textKey, 3, 0);
 		root.add(textFKey, 4, 0);
 		root.add(textMsg, 3, 1);
 		root.add(textFMsg, 4, 1);
-		root.add(btnMsg, 3, 2);
-		root.add(textOutput, 0, 5, 5, 5);
+		root.add(btnMsg, 6, 2);
+		root.add(textFOutput, 0, 5, 5, 5);
 	   
 		primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
-		primaryStage.setTitle("OTP");
+		primaryStage.setTitle("One Time Pad");
 		primaryStage.show();
 	}
 	
-	public String getLocalIp() {
-		return textFLocalIp.getText();
+	public String getIp() {
+		return textFIp.getText();
 	}
 	
-	public String getConnectIp() {
-		return textFConnectIp.getText();
-	}
-	
-	public String getLocalPort() {
-		return textFLocalPort.getText();
-	}
-	
-	public String getConnectPort() {
-		return textFConnectPort.getText();
+	public String getPort() {
+		return textFPort.getText();
 	}
 	
 	public String getKey() {
@@ -94,7 +77,7 @@ public class GUI {
 	}
 	
 	public void setOutput(String s) {
-		textOutput.setText(s);
+		textFOutput.setText(s);
 	}
 
 	public String getMsg() {

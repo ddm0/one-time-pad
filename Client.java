@@ -61,7 +61,7 @@ public class Client extends Thread {
 
 		while (running) {	
 			try {
-				print = input.readUTF();
+				print = Pad.decrypt(input.readUTF());
 				Platform.runLater(new Runnable() {
 					public void run() {
 						gui.setOutput(print);

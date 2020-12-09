@@ -46,6 +46,7 @@ public class ServerGUI extends Application {
 				server = new Server(gui.getLocalIp(), Integer.parseInt(gui.getLocalPort()), gui);
 				gui.setOutput(server.print);
 				server.open();
+				Pad.setKey(gui.getKey());
 			} 
 			catch (NumberFormatException e) {
 				gui.setStatus("Invalid port.");
@@ -90,7 +91,7 @@ public class ServerGUI extends Application {
 			}
 
 			try {
-				server.sendData(Pad.encrypt(gui.getMsg(), gui.getKey()));
+				server.sendData(Pad.encrypt(gui.getMsg()));
 			}
 			catch (IOException e) {
 				gui.setStatus("Failed to send the message." + e.getMessage());

@@ -27,8 +27,7 @@ public class Client extends Thread {
 		proxy = new Proxy(Proxy.Type.SOCKS, addr);
 
 		dest = new InetSocketAddress(ip, port);
-		//socket = new Socket(proxy);
-		socket = new Socket();
+		socket = new Socket(proxy);
 		this.gui = gui;
 	}
 

@@ -16,7 +16,6 @@ public class GUI {
 	private TextField textFMsg;
 	private Text textStatusMsg;
 	private TextField textFOutput;
-	private TextField textFPass;
 
     void init(EventHandler<ActionEvent> eMsg, GridPane root, Stage primaryStage) {
 		final int WIDTH = 650;
@@ -32,13 +31,11 @@ public class GUI {
 		textStatusMsg = new Text("OFFLINE");
 		Text textKey = new Text("Pad:");
 		Text textMsg = new Text("Message:");
-		Text textPass = new Text("Password:");
 		
 		textFIp = new TextField();
 		textFPort = new TextField();
 		textFKey = new TextField();
 		textFMsg = new TextField();
-		textFPass = new TextField();
 		textFOutput = new TextField("No messages");	
 
 		Button btnMsg = new Button();
@@ -48,16 +45,14 @@ public class GUI {
 
 		root.add(textFIp, 1, 0);
 		root.add(textFPort, 1, 1);
-		root.add(textPass, 0, 2);
-		root.add(textFPass, 1, 2);
-		root.add(textStatus, 0, 3);
-		root.add(textStatusMsg, 1, 3, 4, 1);
+		root.add(textStatus, 0, 2);
+		root.add(textStatusMsg, 1, 2, 4, 1);
 		root.add(textKey, 3, 0);
 		root.add(textFKey, 4, 0);
 		root.add(textMsg, 3, 1);
 		root.add(textFMsg, 4, 1);
-		root.add(btnMsg, 6, 2);
-		root.add(textFOutput, 0, 5, 5, 5);
+		root.add(btnMsg, 6, 3);
+		root.add(textFOutput, 0, 3, 5, 1);
 	   
 		primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
 		primaryStage.setTitle("One Time Pad");

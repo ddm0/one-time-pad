@@ -44,7 +44,7 @@ public class GUI {
 		textFConnectPort = new TextField();
 		textFKey = new TextField();
 		textFMsg = new TextField();
-		textOutput = new TextField("No message recieved.");	
+		textOutput = new TextField("No messages");	
 		textOutput.setPrefWidth(80);
 
 		Button btnMsg = new Button();

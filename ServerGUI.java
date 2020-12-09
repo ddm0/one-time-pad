@@ -7,13 +7,12 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.lang.NumberFormatException;
 import java.net.ConnectException;
+import javafx.application.Platform;
 
 public class ServerGUI extends Application {
 		
 	GUI gui = new GUI();
-	Server server;
-	boolean serverAlive = false;
-	Listener listener = new Listener(server, gui);
+	Server server = new Server();
 
 	public void start(Stage primaryStage) {
 		GridPane root = new GridPane();
@@ -36,16 +35,17 @@ public class ServerGUI extends Application {
 		launch(args);
 	}
 
-
 	EventHandler<ActionEvent> eCreate = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
-			if (serverAlive) {
+			if (server.isRunning()) {
 				gui.setStatus("Server already running.");	
 				return;
 			}
 
 			try {
-				server = new Server(gui.getLocalIp(), Integer.parseInt(gui.getLocalPort()));
+				server = new Server(gui.getLocalIp(), Integer.parseInt(gui.getLocalPort()), gui);
+				gui.setOutput(server.print);
+				server.open();
 			} 
 			catch (NumberFormatException e) {
 				gui.setStatus("Invalid port.");
@@ -57,25 +57,21 @@ public class ServerGUI extends Application {
 			}
 			
 
-			listener = new Listener(server, gui);
-			listener.start();
+			//Platform.runLater(listener);
 
 			gui.setStatus("Successfully started the server.");
-			serverAlive = true;
 		}
 	};
 	
 	EventHandler<ActionEvent> eDestroy = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
-			if (!serverAlive) {
+			if (!server.isRunning()) {
 				gui.setStatus("No server running.");	
 				return;
 			}
-
-			listener.exit();
 			
 			try {
-				server.stop();
+				server.close();
 			}
 			catch (IOException e) {
 				gui.setStatus("Failed to stop the server." + e.getMessage());
@@ -83,13 +79,12 @@ public class ServerGUI extends Application {
 			}
 				
 			gui.setStatus("Successfully stopped the server.");
-			serverAlive = false;
 		}
 	};
 	
 	EventHandler<ActionEvent> eMsg = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
-			if (!serverAlive) {
+			if (!server.isRunning()) {
 				gui.setStatus("No server running.");	
 				return;
 			}
@@ -97,8 +92,9 @@ public class ServerGUI extends Application {
 			try {
 				server.sendData(Pad.encrypt(gui.getMsg(), gui.getKey()));
 			}
-			catch (Exception e) {
+			catch (IOException e) {
 				gui.setStatus("Failed to send the message." + e.getMessage());
+				return;
 			}
 
 			gui.setStatus("Sent the encrypted message");

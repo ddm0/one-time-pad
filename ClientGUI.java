@@ -12,10 +12,8 @@ public class ClientGUI extends Application {
 		
 	GUI gui = new GUI();
 	Client client;
-	Listener listener = new Listener(client, gui);
 
 	public void start(Stage primaryStage) {
-		client = new Client("", 0);
 		GridPane root = new GridPane();
 
 		Button btnConnect = new Button();
@@ -39,7 +37,7 @@ public class ClientGUI extends Application {
 	EventHandler<ActionEvent> eConnect = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
 			try {
-				client = new Client(gui.getConnectIp(), Integer.parseInt(gui.getConnectPort()));
+				client = new Client(gui.getConnectIp(), Integer.parseInt(gui.getConnectPort()), gui);
 				client.connect();
 			} 
 			catch (NumberFormatException e) {
@@ -51,15 +49,13 @@ public class ClientGUI extends Application {
 				return;
 			}
 
-			listener = new Listener(client, gui);
-			listener.start();
+			//Platform.run
+			gui.setStatus("Connected to the server.");
 		}
 	};
 	
 	EventHandler<ActionEvent> eDisconnect = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
-			listener.exit();
-
 			try {
 				client.disconnect();
 			}
@@ -76,7 +72,8 @@ public class ClientGUI extends Application {
 				client.sendData(Pad.encrypt(gui.getMsg(),gui.getKey()));
 			}
 			catch (IOException e) {
-				gui.setStatus("Failed to send the message.");
+				gui.setStatus("Failed to send the message." + e.getMessage());
+				return;
 			}
 
 			gui.setStatus("Sent the encrypted message.");

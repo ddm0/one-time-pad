@@ -61,7 +61,7 @@ public class ServerGUI extends Application {
 				return;
 			}
 			catch (IOException e) {
-				gui.setStatus("Failed to start the server." + e.getMessage());
+				gui.setStatus("Failed to start the server. " + e.getMessage());
 				return;
 			}
 			
@@ -80,7 +80,7 @@ public class ServerGUI extends Application {
 				server.close();
 			}
 			catch (IOException e) {
-				gui.setStatus("Failed to stop the server." + e.getMessage());
+				gui.setStatus("Failed to stop the server. " + e.getMessage());
 				return;
 			}
 				
@@ -100,10 +100,11 @@ public class ServerGUI extends Application {
 					server.sendData(Pad.encrypt(gui.getMsg()));
 				} else {
 					gui.setStatus("Message too long for the remaining characters in the key.");
+					return;
 				}
 			}
 			catch (IOException e) {
-				gui.setStatus("Failed to send the message." + e.getMessage());
+				gui.setStatus("Failed to send the message. " + e.getMessage());
 				return;
 			}
 

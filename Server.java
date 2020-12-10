@@ -59,11 +59,13 @@ public class Server extends Thread {
 				});
 			}
 
-			Platform.runLater(new Runnable() {
-				public void run() {
-					gui.setStatus("Client connected.");
-				}
-			});
+			if (running) {
+				Platform.runLater(new Runnable() {
+					public void run() {
+						gui.setStatus("Client connected.");
+					}
+				});
+			}
 
 			while (running) {	
 				try {

@@ -38,8 +38,8 @@ public class Client extends Thread {
 	}
 
 	void disconnect() throws IOException {
-		socket.close();
 		running = false;
+		socket.close();
 	}
 
 	void sendData(String data) throws IOException { 

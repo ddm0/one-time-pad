@@ -35,7 +35,9 @@ public class Server extends Thread {
 
 	void close() throws IOException {
 		running = false;
-		sendData("DISCONNECT");	
+		try {
+			sendData("DISCONNECT");	
+		} catch (Exception e) {}
 		serversocket.close();
 	}
 

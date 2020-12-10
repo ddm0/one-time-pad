@@ -18,9 +18,9 @@ public class Client extends Thread {
 	private boolean running = false;
 	private GUI gui;
 	private String print;
-		
-	Client() {}
 
+	Client() {}
+		
 	Client(String ip, int port, GUI gui) {
 		//tor
 		addr = new InetSocketAddress("127.0.0.1", 9050);
@@ -60,9 +60,19 @@ public class Client extends Thread {
 				});
 			}
 			catch (IOException e) {
+				Platform.runLater(new Runnable() {
+					public void run() {
+						gui.setStatus("Disconnected.");
+					}
+				});
 				running = false;
+				//socket.close();
 			}
 		}
+	}
+
+	public boolean isRunning() {
+		return running;
 	}
 }
 

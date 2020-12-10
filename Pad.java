@@ -1,5 +1,5 @@
 public class Pad {
-	static String key;
+	static private String key;
 	static private int count;
 
 	public static void setKey(String k) {

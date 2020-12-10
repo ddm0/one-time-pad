@@ -31,7 +31,7 @@ public class Client extends Thread {
 	}
 
 	void connect() throws IOException {
-		socket.connect(dest, 1000);
+		socket.connect(dest, 5000);
 		output = new DataOutputStream(socket.getOutputStream());
 		input = new DataInputStream(socket.getInputStream());
 		start();

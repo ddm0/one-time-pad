@@ -52,11 +52,13 @@ public class Server extends Thread {
 				input = new DataInputStream(socket.getInputStream());
 			}
 			catch (IOException e) {
-				Platform.runLater(new Runnable() {
-					public void run() {
-						gui.setStatus("Error accepting client.");
-					}
-				});
+				if (running) {
+					Platform.runLater(new Runnable() {
+						public void run() {
+							gui.setStatus("Error accepting client.");
+						}
+					});
+				}
 			}
 
 			if (running) {

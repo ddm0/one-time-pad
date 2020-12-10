@@ -4,11 +4,15 @@ public class Pad {
 
 	public static void setKey(String k) {
 		key = k;
-		count = key.length();
+		count = 0;
 	}
 
 	public static boolean canEncrypt(String s) {
-		return s.length() > count;
+		return (s.length() < (key.length() - count));
+	}
+
+	public static void undo(int i) {
+		count -= i;
 	}
 
 	public static String encrypt(String msg) {
@@ -17,7 +21,7 @@ public class Pad {
 
 		for (int i = 0; i < msg.length(); i++) {
 			m[i] ^= k[count];	
-			count--;
+			count++;
 		}
 
 		return new String(m);

@@ -31,7 +31,7 @@ public class Client extends Thread {
 	}
 
 	void connect() throws IOException {
-		socket.connect(dest);
+		socket.connect(dest, 1000);
 		output = new DataOutputStream(socket.getOutputStream());
 		input = new DataInputStream(socket.getInputStream());
 		start();
@@ -51,7 +51,11 @@ public class Client extends Thread {
 
 		while (running) {	
 			try {
-				print = Pad.decrypt(input.readUTF());
+				print = input.readUTF();
+				if (print.equals("DISCONNECT")) {
+					throw new IOException();
+				}
+				print = Pad.decrypt(print);
 				Platform.runLater(new Runnable() {
 					public void run() {
 						gui.setOutput(print);
@@ -65,7 +69,6 @@ public class Client extends Thread {
 					}
 				});
 				running = false;
-				//socket.close();
 			}
 		}
 	}

@@ -52,7 +52,6 @@ public class ServerGUI extends Application {
 					gui.setStatus("Invalid key");
 					return;
 				}
-				Pad.setKey(gui.getKey());
 				server = new Server(gui.getIp(), Integer.parseInt(gui.getPort()), gui);
 				server.open();
 			} 

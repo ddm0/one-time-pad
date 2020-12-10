@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.lang.NumberFormatException;
 import java.net.ConnectException;
 import javafx.scene.text.Text;
+import javafx.stage.WindowEvent;
+import javafx.application.Platform;
 
 public class ServerGUI extends Application {
 		
@@ -34,6 +36,18 @@ public class ServerGUI extends Application {
 		root.add(btnDestroy, 6, 1);
 
 		gui.init(eMsg, root, primaryStage);
+		
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent t) {
+				try {
+					server.close();
+				}
+				catch (Exception e) {}
+				Platform.exit();
+				System.exit(0);
+			}
+		});
 	}
 
 	public static void main(String[] args) {

@@ -14,8 +14,7 @@ public class Server extends Thread {
 	private DataInputStream input; private DataOutputStream output;
 	private boolean running = false;
 	private GUI gui;
-
-	public String print;
+	private String print;
 
 	Server() {}
 
@@ -52,7 +51,20 @@ public class Server extends Thread {
 				output = new DataOutputStream(socket.getOutputStream());
 				input = new DataInputStream(socket.getInputStream());
 			}
-			catch (IOException e) {}
+			catch (IOException e) {
+				Platform.runLater(new Runnable() {
+					public void run() {
+						gui.setStatus("Error accepting client.");
+					}
+				});
+			}
+
+			Platform.runLater(new Runnable() {
+				public void run() {
+					gui.setStatus("Client connected.");
+				}
+			});
+
 			while (running) {	
 				try {
 					print = Pad.decrypt(input.readUTF());
@@ -63,6 +75,11 @@ public class Server extends Thread {
 					});
 				}
 				catch (IOException e) {
+					Platform.runLater(new Runnable() {
+						public void run() {
+							gui.setStatus("Disconnected.");
+						}
+					});
 					break;
 				}
 			}

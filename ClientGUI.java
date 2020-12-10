@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 public class ClientGUI extends Application {
 		
 	GUI gui = new GUI();
-	Client client;
+	Client client = new Client();
 
 	public void start(Stage primaryStage) {
 		GridPane root = new GridPane();
@@ -42,10 +42,18 @@ public class ClientGUI extends Application {
 
 	EventHandler<ActionEvent> eConnect = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
+			if (client.isRunning()) {
+				gui.setStatus("Already connected to server.");
+			}
+
 			try {
+				if (gui.getKey().equals("")) {
+					gui.setStatus("Invalid key");
+					return;
+				}
+				Pad.setKey(gui.getKey());
 				client = new Client(gui.getIp(), Integer.parseInt(gui.getPort()), gui);
 				client.connect();
-				Pad.setKey(gui.getKey());
 			} 
 			catch (NumberFormatException e) {
 				gui.setStatus("Invalid port.");
@@ -62,6 +70,11 @@ public class ClientGUI extends Application {
 	
 	EventHandler<ActionEvent> eDisconnect = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
+			if (!client.isRunning()) {
+				gui.setStatus("Not connected to the server.");	
+				return;
+			}
+
 			try {
 				client.disconnect();
 			}
@@ -74,8 +87,17 @@ public class ClientGUI extends Application {
 	
 	EventHandler<ActionEvent> eMsg = new EventHandler<ActionEvent>() {
 		public void handle(ActionEvent ae) {
+			if (!client.isRunning()) {
+				gui.setStatus("Not connected to the server.");	
+				return;
+			}
+
 			try {
-				client.sendData(Pad.encrypt(gui.getMsg()));
+				if (Pad.canEncrypt(gui.getMsg())){
+					client.sendData(Pad.encrypt(gui.getMsg()));
+				} else {
+					gui.setStatus("Message too long for the remaining characters in the key.");
+				}
 			}
 			catch (IOException e) {
 				gui.setStatus("Failed to send the message." + e.getMessage());
@@ -85,6 +107,5 @@ public class ClientGUI extends Application {
 			gui.setStatus("Sent the encrypted message.");
 		}
 	};
-
 }
 

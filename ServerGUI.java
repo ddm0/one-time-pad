@@ -48,10 +48,13 @@ public class ServerGUI extends Application {
 			}
 
 			try {
-				server = new Server(gui.getIp(), Integer.parseInt(gui.getPort()), gui);
-				gui.setOutput(server.print);
-				server.open();
+				if (gui.getKey().equals("")) {
+					gui.setStatus("Invalid key");
+					return;
+				}
 				Pad.setKey(gui.getKey());
+				server = new Server(gui.getIp(), Integer.parseInt(gui.getPort()), gui);
+				server.open();
 			} 
 			catch (NumberFormatException e) {
 				gui.setStatus("Invalid port.");
@@ -93,7 +96,11 @@ public class ServerGUI extends Application {
 			}
 
 			try {
-				server.sendData(Pad.encrypt(gui.getMsg()));
+				if (Pad.canEncrypt(gui.getMsg())){
+					server.sendData(Pad.encrypt(gui.getMsg()));
+				} else {
+					gui.setStatus("Message too long for the remaining characters in the key.");
+				}
 			}
 			catch (IOException e) {
 				gui.setStatus("Failed to send the message." + e.getMessage());

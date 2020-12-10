@@ -60,7 +60,7 @@ public class ClientGUI extends Application {
 				return;
 			}
 			catch (IOException e) {
-				gui.setStatus("Failed to connect." + e.getMessage());
+				gui.setStatus("Failed to connect. " + e.getMessage());
 				return;
 			}
 
@@ -79,7 +79,7 @@ public class ClientGUI extends Application {
 				client.disconnect();
 			}
 			catch (IOException e) {
-				gui.setStatus("Failed to disconnect." + e.getMessage());
+				gui.setStatus("Failed to disconnect. " + e.getMessage());
 			}
 			gui.setStatus("Disconnected from the server.");
 		}
@@ -97,10 +97,11 @@ public class ClientGUI extends Application {
 					client.sendData(Pad.encrypt(gui.getMsg()));
 				} else {
 					gui.setStatus("Message too long for the remaining characters in the key.");
+					return;
 				}
 			}
 			catch (IOException e) {
-				gui.setStatus("Failed to send the message." + e.getMessage());
+				gui.setStatus("Failed to send the message. " + e.getMessage());
 				return;
 			}
 

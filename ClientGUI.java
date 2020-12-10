@@ -92,6 +92,11 @@ public class ClientGUI extends Application {
 				return;
 			}
 
+			if (gui.getMsg() == null || gui.getMsg().isEmpty()) {
+				gui.setStatus("Invalid message.");
+				return;
+			}
+
 			try {
 				if (Pad.canEncrypt(gui.getMsg())){
 					client.sendData(Pad.encrypt(gui.getMsg()));
@@ -102,6 +107,7 @@ public class ClientGUI extends Application {
 			}
 			catch (IOException e) {
 				gui.setStatus("Failed to send the message. " + e.getMessage());
+				Pad.undo(gui.getMsg().length());
 				return;
 			}
 

@@ -7,7 +7,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import javafx.application.Platform; 
 
-
 public class Client extends Thread {
 	private	SocketAddress addr;
 	private	Proxy proxy; 

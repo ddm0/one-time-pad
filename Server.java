@@ -35,6 +35,7 @@ public class Server extends Thread {
 
 	void close() throws IOException {
 		running = false;
+		sendData("DISCONNECT");	
 		serversocket.close();
 	}
 
@@ -50,6 +51,7 @@ public class Server extends Thread {
 				socket = serversocket.accept();
 				output = new DataOutputStream(socket.getOutputStream());
 				input = new DataInputStream(socket.getInputStream());
+				Pad.setKey(gui.getKey());
 			}
 			catch (IOException e) {
 				if (running) {
